@@ -22,7 +22,7 @@ local studio_palette = require(script:WaitForChild("DarkThemePalette"))
 
 -- functions to split color name and modifier
 local StudioStyleGuideModifier = {}
-for iModifier, eModifier in pairs(Enum.StudioStyleGuideModifier:GetEnumItems()) do
+for _, eModifier in pairs(Enum.StudioStyleGuideModifier:GetEnumItems()) do
     StudioStyleGuideModifier[eModifier.Name] = eModifier
 end
 local function parseColorAndModifier(name)
@@ -40,63 +40,16 @@ end
 
 -- common palette containing all colors with all modifiers
 local palette = {}
-for iColor, eColor in pairs(Enum.StudioStyleGuideColor:GetEnumItems()) do
+for _, eColor in pairs(Enum.StudioStyleGuideColor:GetEnumItems()) do
     --palette[eColor.Name] = { eColor }
     palette[eColor.Name] = { }
-    for iModifier, eModifier in pairs(Enum.StudioStyleGuideModifier:GetEnumItems()) do
+    for _, eModifier in pairs(Enum.StudioStyleGuideModifier:GetEnumItems()) do
 		palette[eColor.Name][eModifier.Name] = { eColor, eModifier }
 	end
 end
 
 local WidgetPalette = {}
 local private = {}
-
-private.serfuns = {
-    table = function(tbl, recur)
-        local result = {}
-        local intkeys, maxint = 0, 0
-        for k, v in pairs(tbl) do
-            if intkeys and type(k) == "number" then
-                if (k > 0) and (k % 1 == 0) then
-                    intkeys = intkeys + 1
-                    if k > maxint then
-                        maxint = k
-                    end
-                end
-            else
-                intkeys = false
-            end
-            table.insert(result, "["..private.anal(k, recur).."]="..private.anal(v, recur))
-        end
-        if maxint == intkeys then
-            result = {}
-            for i,v in ipairs(tbl) do
-                table.insert(result, private.anal(v))
-            end
-        end
-        return ("{"..table.concat(result,", ").."}")
-    end,
-    string = function(x) return string.format("%q", x) end,
-    ["function"] = tostring,
-    boolean = tostring,
-    userdata = tostring
-}
-
-private.anal = function (thing, recur)
-    recur = recur or {}
-    local serfun = private.serfuns[type(thing)]
-    if not serfun then
-        return thing
-    end
-    if recur[thing] then
-        return "*** REKURZE ***"
-    end
-    if type(thing) == "table" then
-        recur[thing] = true
-    end
-    return serfun(thing, recur)
-end
-
 
 -- find Enum.UITheme of actual Theme
 local function getActualTheme()
@@ -223,7 +176,9 @@ function WidgetPalette.new()
     local self = {}
     private[self] = {}
     private[self].palette = {}
-    self.destroy = function(this) private[this] = nil end
+    self.destroy = function(this)
+        private[this] = nil
+    end
     setmetatable(self, WidgetPalette)
     return self
 end
