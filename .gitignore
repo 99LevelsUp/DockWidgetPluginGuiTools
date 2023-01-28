@@ -39,3 +39,15 @@ luac.out
 *.x86_64
 *.hex
 
+# Extensions specific
+selene.toml
+
+# Project place file
+/*.rbxlx
+/*.rbxmx
+
+# Roblox Studio lock files
+/*.rbxlx.lock
+/*.rbxl.lock
+/*.rbxmx.lock
+/*.rbxm.lock
