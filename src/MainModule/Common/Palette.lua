@@ -1,8 +1,10 @@
 
 -- when studio is not present (aka in th game) the studio palette is not available
 -- in that case internal dark theme palette is used instead
-local studio_status, studio = pcall(function () return settings().Studio end)
-local studio_palette = require(script:WaitForChild("DarkThemePalette"))
+local studio_status, studio = pcall(function ()
+    return settings().Studio
+end)
+--local studio_palette = require(script:WaitForChild("DarkThemePalette", 3))
 
 -- some string manipulation functions
 --if not string.startswith then
@@ -39,12 +41,11 @@ local function parseColorAndModifier(name)
 end
 
 -- common palette containing all colors with all modifiers
-local palette = {}
+local commonPalette = {}
 for _, eColor in pairs(Enum.StudioStyleGuideColor:GetEnumItems()) do
-    --palette[eColor.Name] = { eColor }
-    palette[eColor.Name] = { }
+    commonPalette[eColor.Name] = { }
     for _, eModifier in pairs(Enum.StudioStyleGuideModifier:GetEnumItems()) do
-		palette[eColor.Name][eModifier.Name] = { eColor, eModifier }
+		commonPalette[eColor.Name][eModifier.Name] = { eColor, eModifier }
 	end
 end
 
@@ -60,6 +61,7 @@ local function getActualTheme()
 			return t
 		end
 	end
+    return nil
 end
 WidgetPalette.ActualTheme = getActualTheme()
 
@@ -96,9 +98,9 @@ end
 -- obtain actual color
 WidgetPalette.__index = function(table, key)
     
-    local function searchPaletteForColorName(palette, key)
-        local name, modifier = parseColorAndModifier(key)
-        local color
+    local function searchPaletteForColorName(palette, name)
+        local modifier, color
+        name, modifier = parseColorAndModifier(key)
         
         if palette ~= nil then
             -- first we are trying to get the raw name
@@ -121,9 +123,10 @@ WidgetPalette.__index = function(table, key)
             return color
         elseif studio_status then
             return studio.Theme:GetColor(color, modifier)
-        else
-            return studio_palette[color][modifier or Enum.StudioStyleGuideModifier.Default]
+        -- else
+        --     return studio_palette[color][modifier or Enum.StudioStyleGuideModifier.Default]
         end
+        return nil
     end    
     
     local function ifExistsThenGetColorDefinition(definition, modifier, notFound)
@@ -140,10 +143,10 @@ WidgetPalette.__index = function(table, key)
         end
     end
     
-    local usedPalette, colorDefinition, name, modifier
-    usedPalette, colorDefinition, name, modifier = searchPaletteForColorName(private[table].palette, key)
+    local _usedPalette, colorDefinition, name, modifier
+    _usedPalette, colorDefinition, name, modifier = searchPaletteForColorName(private[table].palette, key)
     if not colorDefinition then
-        usedPalette, colorDefinition, name, modifier = searchPaletteForColorName(palette, key)
+        _usedPalette, colorDefinition, name, modifier = searchPaletteForColorName(commonPalette, key)
     end
     
     -- at this time we had to find the name

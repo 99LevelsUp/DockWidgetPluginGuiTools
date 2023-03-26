@@ -4,9 +4,10 @@
     "$className": "DataModel",
 
     "ReplicatedStorage": {
-      "DockWidgetPluginGuiTools": {
-        "$path": "src"
+        "DockWidgetPluginGuiTools": {
+          "$path": "src"
       }
     }
+
   }
 }
