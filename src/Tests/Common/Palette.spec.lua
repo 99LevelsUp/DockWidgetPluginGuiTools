@@ -1,7 +1,6 @@
 local Palette = require(script.Parent.Parent.Parent.MainModule.Common:WaitForChild("Palette"))
 
 return function()
-
     -- constants
     local staticColors = {
         Color3.new(0.1, 0.1, 0.1),
