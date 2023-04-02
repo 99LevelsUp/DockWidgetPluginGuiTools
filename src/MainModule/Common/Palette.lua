@@ -53,7 +53,7 @@ local WidgetPalette = {}
 local private = {}
 
 -- find Enum.UITheme of actual Theme
-local function getActualTheme()
+local function getActualTheme() : Enum.UITheme?
 	for _, t in pairs(Enum.UITheme:GetEnumItems()) do
 		if not studio_status then
 			return t
@@ -136,7 +136,9 @@ WidgetPalette.__index = function(table, key)
             return getStudioColor(definition, modifier), definition
         elseif typeof(definition) == "table" and definition[1] then
             return getStudioColor(definition[1], definition[2] or modifier), definition
-        elseif typeof(definition) == "table" then
+            elseif typeof(definition) == "table" and definition["color"] then
+                return getStudioColor(definition["color"], definition["modifier"] or modifier), definition
+            elseif typeof(definition) == "table" then
             return notFound, definition
         else
             return notFound, definition
