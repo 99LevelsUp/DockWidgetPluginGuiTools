@@ -136,9 +136,9 @@ WidgetPalette.__index = function(table, key)
             return getStudioColor(definition, modifier), definition
         elseif typeof(definition) == "table" and definition[1] then
             return getStudioColor(definition[1], definition[2] or modifier), definition
-            elseif typeof(definition) == "table" and definition["color"] then
-                return getStudioColor(definition["color"], definition["modifier"] or modifier), definition
-            elseif typeof(definition) == "table" then
+        elseif typeof(definition) == "table" and definition["color"] then
+            return getStudioColor(definition["color"], definition["modifier"] or modifier), definition
+        elseif typeof(definition) == "table" then
             return notFound, definition
         else
             return notFound, definition
