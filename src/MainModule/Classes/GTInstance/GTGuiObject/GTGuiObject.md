@@ -1,4 +1,4 @@
-# GuiObject
+# GTGuiObject
 
 `NOT CREATABLE`
 
@@ -8,7 +8,7 @@ This is a superclass for all other GuiObjects. The main reason for this class is
 
 ## Constructors
 
-### new(guiObject: [Instance])
+### new(obj: [GuiObject])
 
 Creates new GuiObject with mappings of several standard properties.
 
@@ -25,10 +25,6 @@ Maps to property [AnchorPoint](https://create.roblox.com/docs/reference/engine/c
 ### LayoutOrder: [number]
 
 Maps to property [LayoutOrder](https://create.roblox.com/docs/reference/engine/classes/GuiObject#LayoutOrder).
-
-### Name: [string]
-
-Maps to property [Name](https://create.roblox.com/docs/reference/engine/classes/Instance#Name).
 
 ### Position: [UDim2]
 
@@ -50,6 +46,20 @@ Maps to property [Visible](https://create.roblox.com/docs/reference/engine/class
 
 Maps to property [ZIndex](https://create.roblox.com/docs/reference/engine/classes/GuiObject#ZIndex).
 
+<details><summary>
+
+Inherited from [GTInstance](../GTInstance.md#properties)
+</summary>
+
+### Name: [string]
+
+Maps to property [Name](https://create.roblox.com/docs/reference/engine/classes/Instance#Name).
+
+</details>
+
+## Methods
+
+Inherited from [GTInstance](../GTInstance.md#methods)
 
 [boolean]: https://create.roblox.com/docs/scripting/luau/booleans
 [number]: https://create.roblox.com/docs/scripting/luau/numbers
@@ -57,3 +67,4 @@ Maps to property [ZIndex](https://create.roblox.com/docs/reference/engine/classe
 [Vector2]: https://create.roblox.com/docs/reference/engine/datatypes/Vector2
 [UDim2]: https://create.roblox.com/docs/reference/engine/datatypes/UDim2
 [Instance]: https://create.roblox.com/docs/reference/engine/classes/Instance
+[GuiObject]: https://create.roblox.com/docs/reference/engine/classes/GuiObject
